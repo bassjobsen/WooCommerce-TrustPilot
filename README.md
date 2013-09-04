@@ -23,12 +23,3 @@ Support
 -------
 
 We are always happy to help you. If you have any question regarding this code. [Send us a message](http://www.jamedowebsites.nl/contact/) or contact us on twitter [@JamedoWebsites](http://twitter.com/JamedoWebsites).
-
-Todo
--------
-
-* Apply grid on all views
-* Make template available in the theme for overwriting and customizing
-
-
-

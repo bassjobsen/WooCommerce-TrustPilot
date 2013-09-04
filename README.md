@@ -5,6 +5,8 @@ WooCommerce TrustPilot Plugin
 
 This plugin sends the required e-mail automatic. In the settings section you will set the unique (secret) e-mail-address from Trustpilot. Choose to send after order processing or order conmpleting also.
 
+[Read more](http://bassjobsen.weblogs.fm/integrate-trustpilots-automatische-feedback-service-with-woocommerce/)
+
 Installation
 ------------
 

@@ -26,12 +26,13 @@ License: GPLv2
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-$class_path  =  ABSPATH . 'wp-content/plugins/woocommerce/classes/';
+if(file_exists( ABSPATH . 'wp-content/plugins/woocommerce/classes/')){$class_path  =  ABSPATH . 'wp-content/plugins/woocommerce/classes/';}
+else $class_path  =  ABSPATH . 'wp-content/plugins/woocommerce/includes/';
 $processclass = 'emails/class-wc-email-customer-processing-order.php';
 $completeclass = 'emails/class-wc-email-customer-completed-order.php';
 $emailclass = 'abstracts/abstract-wc-email.php';
 $settingsapi = 'abstracts/abstract-wc-settings-api.php';
+require_once(ABSPATH . 'wp-content/plugins/woocommerce/woocommerce.php');
 require_once($class_path.$settingsapi);
 require_once($class_path.$emailclass);
 require_once($class_path.$processclass);  
@@ -72,7 +73,7 @@ class WC_Email_Customer_Completed_Order_BCC extends WC_Email_Customer_Completed_
 if ( !in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) 
 {
 // Put your plugin code here
-die('install Woocommerce First');
+//die('install Woocommerce First');
 }
 
 if(!class_exists('WooCommerce_Trustpilot')) 

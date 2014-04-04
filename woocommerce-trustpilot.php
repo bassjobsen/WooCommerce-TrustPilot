@@ -4,7 +4,7 @@ Plugin Name: WooCommerce Trustpilot
 Depends: WooCommerce
 Plugin URI: https://github.com/bassjobsen/woocommerce-trustpilot
 Description: Send the Trustpilot's BCC email after order processing
-Version: 1.0
+Version: 1.1
 Author: Bass Jobsen
 Author URI: http://bassjobsen.weblogs.fm/
 License: GPLv2
@@ -172,18 +172,20 @@ add_action( 'woocommerce_email', 'bccemail' );
 function bccemail($email_class)
 {
    //see: http://docs.woothemes.com/document/unhookremove-woocommerce-emails/
-   
+   //var_dump($email_class);
    if(get_option('sendwhen','complete')==='complete')
    {
-   $newemail_class = new WC_Email_Customer_Completed_Order_BCC();
-   remove_action('woocommerce_order_status_completed_notification', array(&$email_class, 'trigger'));
-   add_action('woocommerce_order_status_completed_notification', array(&$newemail_class, 'trigger'));	
+	$newemail_class = new WC_Email_Customer_Completed_Order_BCC();
+	remove_action('woocommerce_order_status_completed_notification', array(&$email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger'));
+	add_action('woocommerce_order_status_completed_notification', array(&$newemail_class, 'trigger'));	
    }
    else
    {
-			$newemail_class = new WC_Email_Customer_Processing_Order_BCC();
-			remove_action('woocommerce_order_status_completed_notification', array(&$email_class, 'trigger'));
-			add_action('woocommerce_order_status_completed_notification', array(&$newemail_class, 'trigger'));	
+	$newemail_class = new WC_Email_Customer_Processing_Order_BCC();
+	remove_action('woocommerce_order_status_pending_to_processing_notification', array(&$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger'));
+    remove_action('woocommerce_order_status_pending_to_on-hold_notification', array(&$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger'));
+    add_action('woocommerce_order_status_pending_to_processing_notification', array(&$newemail_class, 'trigger'));
+ 	add_action('woocommerce_order_status_pending_to_on-hold_notification', array(&$newemail_class, 'trigger'));	
    }	   
    
 }	

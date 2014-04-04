@@ -3,8 +3,8 @@ Contributors: bassjobsen
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SNYGRL7YNVYQW
 Tags: WooCommerce, Trust Pilot, shopping, reviews
 Requires at least: 3.6
-Tested up to: 3.6
-Stable tag: 1.0
+Tested up to: 3.9
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,7 +42,6 @@ If you have suggestions for a new feature or improvement, feel free to contact u
 == Requirements ==
 
 * [Wordpress](http://wordpress.org/download/) tested with >= 3.6
-* [Twitter's Bootstrap](http://getboostrap.com/) >= 3.0.0 (Twitter's Bootstrap 2 tested with v2.3.2.)
 * [WooCommerce](http://wordpress.org/plugins/woocommerce/) tested with >= 2.0.13
 
 == Support ==

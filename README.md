@@ -22,4 +22,4 @@ Requirements
 Support
 -------
 
-We are always happy to help you. If you have any question regarding this code. [Send us a message](http://www.jamedowebsites.nl/contact/) or contact us on twitter [@JamedoWebsites](http://twitter.com/JamedoWebsites).
+We are always happy to help you. If you have any question regarding this code. [Send us a message](http://themes.jbst.eu/contact-us/) or contact us on twitter [@jbstthemes](http://twitter.com/jbstthemes).

@@ -26,10 +26,10 @@
 <label for="sendwhen"><?php echo __('Sending','woocommercetrustpilot');?></label></th> 
 <td>
 	<?php
-	$sendwhen = (get_option('sendwhen'))?get_option('sendwhen'):'complete';
+	$sendwhen = get_option('sendwhen','complete');
 	?>
-	<input type="radio" value="process" name="sendwhen" <?php echo ($sendwhen=='process')?' checked="checked"':''?>><?php echo __('After processing','woocommercetrustpilot');?><br>
-	<input type="radio" value="complete" name="sendwhen"<?php echo ($sendwhen=='complete')?' checked="checked"':''?>><?php echo __('After complete','woocommercetrustpilot');?><br>
+	<input type="radio" value="process" name="sendwhen" <?php echo ($sendwhen==='process')?' checked="checked"':''?>><?php echo __('After processing','woocommercetrustpilot');?><br>
+	<input type="radio" value="complete" name="sendwhen"<?php echo ($sendwhen==='complete')?' checked="checked"':''?>><?php echo __('After complete','woocommercetrustpilot');?><br>
 </td> 
 </tr> 
 

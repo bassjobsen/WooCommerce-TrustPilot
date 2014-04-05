@@ -183,9 +183,9 @@ function bccemail($email_class)
    {
 	$newemail_class = new WC_Email_Customer_Processing_Order_BCC();
 	remove_action('woocommerce_order_status_pending_to_processing_notification', array(&$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger'));
-    remove_action('woocommerce_order_status_pending_to_on-hold_notification', array(&$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger'));
+    //remove_action('woocommerce_order_status_pending_to_on-hold_notification', array(&$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger'));
     add_action('woocommerce_order_status_pending_to_processing_notification', array(&$newemail_class, 'trigger'));
- 	add_action('woocommerce_order_status_pending_to_on-hold_notification', array(&$newemail_class, 'trigger'));	
+ 	//add_action('woocommerce_order_status_pending_to_on-hold_notification', array(&$newemail_class, 'trigger'));	
    }	   
    
 }	

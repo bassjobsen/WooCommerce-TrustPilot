@@ -4,7 +4,7 @@ Plugin Name: WooCommerce Trustpilot
 Depends: WooCommerce
 Plugin URI: https://github.com/bassjobsen/woocommerce-trustpilot
 Description: Send the Trustpilot's BCC email after order processing
-Version: 1.1
+Version: 1.2
 Author: Bass Jobsen
 Author URI: http://bassjobsen.weblogs.fm/
 License: GPLv2
@@ -176,16 +176,14 @@ function bccemail($email_class)
    if(get_option('sendwhen','complete')==='complete')
    {
 	$newemail_class = new WC_Email_Customer_Completed_Order_BCC();
-	remove_action('woocommerce_order_status_completed_notification', array(&$email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger'));
-	add_action('woocommerce_order_status_completed_notification', array(&$newemail_class, 'trigger'));	
+	remove_all_actions('woocommerce_order_status_completed_notification');
+	add_action('woocommerce_order_status_completed_notification', array($newemail_class, 'trigger'));	
    }
    else
    {
 	$newemail_class = new WC_Email_Customer_Processing_Order_BCC();
-	remove_action('woocommerce_order_status_pending_to_processing_notification', array(&$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger'));
-    //remove_action('woocommerce_order_status_pending_to_on-hold_notification', array(&$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger'));
-    add_action('woocommerce_order_status_pending_to_processing_notification', array(&$newemail_class, 'trigger'));
- 	//add_action('woocommerce_order_status_pending_to_on-hold_notification', array(&$newemail_class, 'trigger'));	
+	remove_all_actions('woocommerce_order_status_pending_to_processing_notification');
+    add_action('woocommerce_order_status_pending_to_processing_notification', array($newemail_class, 'trigger'));
    }	   
    
 }	
@@ -222,4 +220,3 @@ if(class_exists('WooCommerce_Trustpilot'))
 	}
 	
 }
-

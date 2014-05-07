@@ -4,7 +4,7 @@ Plugin Name: WooCommerce Trustpilot
 Depends: WooCommerce
 Plugin URI: https://github.com/bassjobsen/woocommerce-trustpilot
 Description: Send the Trustpilot's BCC email after order processing
-Version: 1.2
+Version: 2.0
 Author: Bass Jobsen
 Author URI: http://bassjobsen.weblogs.fm/
 License: GPLv2
@@ -26,46 +26,6 @@ License: GPLv2
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-if(file_exists( ABSPATH . 'wp-content/plugins/woocommerce/classes/')){$class_path  =  ABSPATH . 'wp-content/plugins/woocommerce/classes/';}
-else $class_path  =  ABSPATH . 'wp-content/plugins/woocommerce/includes/';
-$processclass = 'emails/class-wc-email-customer-processing-order.php';
-$completeclass = 'emails/class-wc-email-customer-completed-order.php';
-$emailclass = 'abstracts/abstract-wc-email.php';
-$settingsapi = 'abstracts/abstract-wc-settings-api.php';
-require_once(ABSPATH . 'wp-content/plugins/woocommerce/woocommerce.php');
-require_once($class_path.$settingsapi);
-require_once($class_path.$emailclass);
-require_once($class_path.$processclass);  
-require_once($class_path.$completeclass);
-
-class WC_Email_Customer_Processing_Order_BCC extends WC_Email_Customer_Processing_Order
-{
-	function get_subject()
-	{ 
-		return WC_Email_Customer_Completed_Order::get_subject().' ('.__('Order ','woocommercetrustpilot').' #'.(string)$this->object->id.')';
-	}	
-	
-	function get_headers()
-	{ 
-		return WC_Email::get_headers().'BCC: '.get_option('trustpilotemail')."\r\n";
-	}
-}	
-
-class WC_Email_Customer_Completed_Order_BCC extends WC_Email_Customer_Completed_Order
-{
-	
-	function get_subject()
-	{ 
-		return WC_Email_Customer_Completed_Order::get_subject().' ('.__('Order ','woocommercetrustpilot').' #'.(string)$this->object->id.')';
-	}	
-	
-	
-	function get_headers()
-	{ 
-		return WC_Email::get_headers().'BCC: '.get_option('trustpilotemail')."\r\n";
-	}
-}	
-
 
 /**
  * Check if WooCommerce is active
@@ -167,27 +127,35 @@ include(sprintf("%s/templates/settings.php", dirname(__FILE__)));
 function init()
 {
 
-add_action( 'woocommerce_email', 'bccemail' );
 
-function bccemail($email_class)
-{
-   //see: http://docs.woothemes.com/document/unhookremove-woocommerce-emails/
-   //var_dump($email_class);
-   if(get_option('sendwhen','complete')==='complete')
-   {
-	$newemail_class = new WC_Email_Customer_Completed_Order_BCC();
-	remove_all_actions('woocommerce_order_status_completed_notification');
-	add_action('woocommerce_order_status_completed_notification', array($newemail_class, 'trigger'));	
-   }
-   else
-   {
-	$newemail_class = new WC_Email_Customer_Processing_Order_BCC();
-	remove_all_actions('woocommerce_order_status_pending_to_processing_notification');
-    add_action('woocommerce_order_status_pending_to_processing_notification', array($newemail_class, 'trigger'));
-   }	   
-   
-}	
+	add_filter( 'woocommerce_email_headers', 'mycustom_headers_filter_function', 10, 3);
 
+	function mycustom_headers_filter_function( $headers, $id, $object ) {
+		if ($id == 'customer_completed_order' && get_option('sendwhen','complete')==='complete') {
+			$headers .= 'BCC: '.get_option('trustpilotemail'). "\r\n";
+		}
+        if ($id == 'customer_processing_order' && get_option('sendwhen','complete')==='process') {
+			
+			$headers .= 'BCC: '.get_option('trustpilotemail'). "\r\n";
+		}
+		return $headers;
+	}
+	
+	if(get_option('sendwhen','complete')==='complete')
+	{
+	add_filter( 'woocommerce_email_subject_customer_completed_order', 'trustpilot_email_subject_customer_completed_order',10, 2 );
+	function trustpilot_email_subject_customer_completed_order($subject,$object){
+		return $subject.' ('.__('Order ','woocommercetrustpilot').' '.(string)$object->get_order_number().')';
+	}
+	}
+	
+	if(get_option('sendwhen','complete')==='process')
+	{
+	add_filter( 'woocommerce_email_subject_customer_processing_order', 'trustpilot_email_subject_customer_processing_order',10, 2 );
+	function trustpilot_email_subject_customer_processing_order($subject,$object){
+		return $subject.' ('.__('Order ','woocommercetrustpilot').' '.(string)$object->get_order_number().')';
+	}
+	}
 }
 
 

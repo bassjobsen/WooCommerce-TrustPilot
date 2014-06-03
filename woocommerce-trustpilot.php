@@ -4,7 +4,7 @@ Plugin Name: WooCommerce Trustpilot
 Depends: WooCommerce
 Plugin URI: https://github.com/bassjobsen/woocommerce-trustpilot
 Description: Send the Trustpilot's BCC email after order processing
-Version: 2.0
+Version: 2.0.0
 Author: Bass Jobsen
 Author URI: http://bassjobsen.weblogs.fm/
 License: GPLv2
